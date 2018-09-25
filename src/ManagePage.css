@@ -1,0 +1,56 @@
+main {
+  display:flex;
+  width: 100%;
+  justify-content: center;
+}
+
+#manage {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  background-color: blue;
+}
+
+#manage div.char-name-area {
+  display: flex;
+  background-color: orange;
+  justify-content: center;
+}
+
+/* #manage-stats div.stat-row div {
+  display: flex;
+  flex-direction: column;
+} */
+
+#manage-stats div.stat-row div label {
+  width: 250px;
+  text-align: right;
+  min-width: 60px;
+}
+
+.name-input {
+  width: 70%;
+}
+
+#manage-stats {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  background-color: green;
+  /* justify-content: center; */
+}
+
+.stat-row label {
+  width: 250px;
+  text-align: right;
+}
+/* #manage-stats .stat-row {
+  display: flex;
+  justify-content: space-around;
+} */
+
+/* #manage-stats:nth-child(4) {
+  display: flex;
+  background-color: orange;
+  justify-content: center;
+} */

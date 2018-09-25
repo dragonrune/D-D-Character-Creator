@@ -1,0 +1,16 @@
+#nav-bar {
+    border: 1px solid black;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: right;
+    height: 100 px;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    height: 83vh;
+}
