@@ -8,49 +8,58 @@ main {
   display: flex;
   flex-direction: column;
   width: 600px;
-  background-color: blue;
+  /* background-color: blue; */
 }
 
+/* This covers the Character name field */
 #manage div.char-name-area {
   display: flex;
-  background-color: orange;
+  /* background-color: orange; */
+  padding-top: 10px;
   justify-content: center;
 }
 
-/* #manage-stats div.stat-row div {
-  display: flex;
-  flex-direction: column;
-} */
-
-#manage-stats div.stat-row div label {
-  width: 250px;
-  text-align: right;
-  min-width: 60px;
-}
-
 .name-input {
-  width: 70%;
+  width: 71%;
 }
 
+/* List of character statistics */
 #manage-stats {
   display: flex;
   width: 100%;
   flex-direction: column;
-  background-color: green;
+  padding-top: 10px;
+  /* background-color: green; */
   /* justify-content: center; */
 }
 
 .stat-row label {
-  width: 250px;
+  width: 100px;
+  display: inline-block;
   text-align: right;
+  padding-right: 10px;
 }
-/* #manage-stats .stat-row {
-  display: flex;
-  justify-content: space-around;
-} */
 
-/* #manage-stats:nth-child(4) {
+button {
+  margin: 20px;
+  margin-left: 23%;
+}
+
+#char-map button {
+  margin: 20px;
+}
+
+/* List of characters in database */
+#list-chars label {
+  margin: 20px;
+  color: red;
+}
+
+#list-chars div {
   display: flex;
-  background-color: orange;
-  justify-content: center;
-} */
+  /* flex-direction: column; */
+}
+
+#char-map label {
+  margin-right: 45px;
+}
