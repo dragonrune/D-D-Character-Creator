@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import NavBar from './NavBar.js'
-import './App.css'
 import './ManagePage.css'
 
 class ManagePage extends Component {
 
   state = {
+    id: '',
     name: '',
     str: '',
     dex: '',
@@ -18,47 +18,47 @@ class ManagePage extends Component {
 
   handleNameChange = (event) => {
     this.setState({
-      name : event.target.value
+      name: event.target.value
     })
   }
 
   handleStrengthChange = (event) => {
     this.setState({
-      str : event.target.value
+      str: event.target.value
     })
   }
 
   handleDexterityChange = (event) => {
     this.setState({
-      dex : event.target.value
+      dex: event.target.value
     })
   }
 
   handleConstitutionChange = (event) => {
     this.setState({
-      con : event.target.value
+      con: event.target.value
     })
   }
 
   handleIntelligenceChange = (event) => {
     this.setState({
-      int : event.target.value
+      int: event.target.value
     })
   }
 
   handleWisdomChange = (event) => {
     this.setState({
-      wis : event.target.value
+      wis: event.target.value
     })
   }
 
   handleCharismaChange = (event) => {
     this.setState({
-      cha : event.target.value
+      cha: event.target.value
     })
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     // GET -- grab list of characters from API
     fetch('http://localhost:3030/', {
       method: 'GET',
@@ -68,18 +68,42 @@ class ManagePage extends Component {
       }
     })
       .then((response) => response.json())
-      .then((chars) =>{
-        console.log(chars)
+      .then((chars) => {
         this.setState({ characters: chars })
-      }
-      )
+      })
+      .catch(() => {
+        return (this.setState({ errormessage: "Error- What the #$%^ did you do ?!" }))
+      })
+  }
+
+  updateData = () => {
+    fetch('http://localhost:3030/', {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: this.state.id,
+        name: this.state.name,
+        str: this.state.str,
+        dex: this.state.dex,
+        con: this.state.con,
+        int: this.state.int,
+        wis: this.state.wis,
+        cha: this.state.cha
+      })
+    })
+      .then((response) => response.json())
+      .then((chars) => {
+        this.setState({ characters: chars })
+      })
       .catch(() => {
         return (this.setState({ errormessage: "Error- What the #$%^ did you do ?!" }))
       })
   }
 
   postData = () => {
-    console.log("name- 'this.state.name'")
     fetch('http://localhost:3030/', {
       method: 'POST',
       headers: {
@@ -98,7 +122,6 @@ class ManagePage extends Component {
     })
       .then((response) => response.json())
       .then((chars) => {
-        console.log(chars)
         this.setState({ characters: chars })
       })
       .catch(() => {
@@ -107,8 +130,16 @@ class ManagePage extends Component {
   }
 
   saveCharacter = () => {
-    this.postData()
+    if (this.state.id) {
+      // Below updates a record
+      this.updateData()
+    } else {
+      // Below creates a record
+      this.postData()
+    }
+    // Either way, clear the screen fields
     this.setState({
+      id: '',
       name: '',
       str: '',
       dex: '',
@@ -127,18 +158,12 @@ class ManagePage extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name: this.state.name,
-        str: this.state.str,
-        dex: this.state.dex,
-        con: this.state.con,
-        int: this.state.int,
-        wis: this.state.wis,
-        cha: this.state.cha
+        id: this.state.id
       })
     })
       .then((response) => response.json())
       .then((chars) =>
-        this.setState({ chars })
+        this.setState({ characters: chars })
       )
       .catch(() => {
         return (this.setState({ errormessage: "Error- What the #$%^ did you do ?!" }))
@@ -146,7 +171,7 @@ class ManagePage extends Component {
   }
 
   deleteCharacter = () => {
-    // this.deleteData()
+    this.deleteData()
     this.setState({
       name: '',
       str: '',
@@ -159,31 +184,40 @@ class ManagePage extends Component {
   }
 
   selectHandler = (char) => {
-    this.setState ({ char })
+    this.setState({
+      id: char._id,
+      name: char.name,
+      str: char.str,
+      dex: char.dex,
+      con: char.con,
+      int: char.int,
+      wis: char.wis,
+      cha: char.cha
+    })
   }
 
   renderCharacters = () => {
     if (this.state.characters) {
       const char = this.state.characters.map(
         (n, i) => {
-            return (
-              <div id='char-map' key={i}>
-                <button onClick={()=>this.selectHandler(n)}>{n.name}</button>
-                <label>{n.str}</label>
-                <label>{n.dex}</label>
-                <label>{n.con}</label>
-                <label>{n.int}</label>
-                <label>{n.wis}</label>
-                <label>{n.cha}</label>
-              </div>
-            )
+          return (
+            <div id='char-map' key={i}>
+              <button onClick={() => this.selectHandler(n)}>{n.name}</button>
+              <div>{n.str}</div>
+              <div>{n.dex}</div>
+              <div>{n.con}</div>
+              <div>{n.int}</div>
+              <div>{n.wis}</div>
+              <div>{n.cha}</div>
+            </div>
+          )
         }
       )
       return char
     }
   }
 
-  render() {
+  render = () => {
     return (
       <div>
         <header id="nav-bar">
@@ -233,13 +267,15 @@ class ManagePage extends Component {
               </span>
             </div>
             <div id="list-chars">
-              <div>
-                <label>Name</label><label>STR</label><label>DEX</label><label>CONS</label><label>INT</label><label>WIS</label><label>CHA</label>
-              </div>
-              <div>
+              <p></p> {/* blank line to separate headings */}
+              <section className="top-labels">
+                <div>Name</div><div>STR</div><div>DEX</div><div>CONS</div><div>INT</div><div>WIS</div><div>CHA</div>
+              </section>
+              <p></p> {/* blank line to separate data from headings */}
+              <section className="bottom-labels">
                 {/* Character data goes here */}
                 {this.renderCharacters()}
-              </div>
+              </section>
             </div>
           </div>
         </main>

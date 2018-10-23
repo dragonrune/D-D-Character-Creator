@@ -46,13 +46,36 @@ button {
 }
 
 #char-map button {
-  margin: 20px;
+  margin: 0px;
 }
 
 /* List of characters in database */
+#list-chars section.top-labels {
+  display: flex;
+  width: 700px;
+  justify-content: space-between;
+}
+
+#list-chars section.top-labels div {
+  display: flex;
+  width: 100px;
+  justify-content: center;
+}
+
 #list-chars label {
   margin: 20px;
   color: red;
+}
+
+#list-chars section.bottom-labels {
+  display: flex;
+  width: 700px;
+  flex-direction: column;
+}
+
+section.bottom-labels div {
+  width: 25px;
+  text-align: right;
 }
 
 #list-chars div {
@@ -60,6 +83,25 @@ button {
   /* flex-direction: column; */
 }
 
+#char-map {
+  display:flex;
+  width: 700px;
+  justify-content: space-between;
+}
+
+#list-chars section.bottom-labels #char-map div {
+  display:flex;
+  width: 100px;
+  justify-content: center;
+}
+
 #char-map label {
   margin-right: 45px;
+}
+
+#char-map button {
+  margin: 0px;
+  width: 100px;
+  border-radius: 5px;
+  word-wrap: break-word;
 }
